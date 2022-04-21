@@ -110,7 +110,7 @@ const TaskManager: React.FC = () => {
         justifyContent="center"
       >
         <Typography align='center' variant="h5">
-          <Box > Please watch the instructional video below and press the "START RECORDING" button afterwards</Box>
+          <Box > Please watch the instructional video below and press START RECORDING when you are finished.</Box>
         </Typography>
         <Box m={1} />
         <Divider />
@@ -154,7 +154,7 @@ const TaskManager: React.FC = () => {
         <Box m={1} />
         <Typography variant="body1">
           You will complete 21 tasks, which should only take about 15-20 minutes total. You will need to enable access
-          to your computer’s camera and microphone; if prompted to do so after pressing the "Start" button
+          to your computer’s camera and microphone; if prompted to do so after pressing START
           below, please select “Allow”.
 
         </Typography>        <Box m={1} />
@@ -283,7 +283,7 @@ const TaskManager: React.FC = () => {
       >
         <DoneOutline fontSize="large" />
         <Typography variant="h4">{session.currentTask == Task.tongue_twister ? "Thank you for participating!" : "Good job!"}</Typography>
-        <Typography>{session.currentTask == Task.tongue_twister ? "Please press the FINISH button below." : "Press NEXT to continue"}</Typography>
+        <Typography>{session.currentTask == Task.tongue_twister ? "Please press FINISH." : "Press NEXT to continue"}</Typography>
         <Box m={1} />
         <Button variant="contained" color="primary" onClick={session.currentTask == Task.tongue_twister ? signout : completeTask}>
           {session.currentTask == Task.tongue_twister ? "FINISH" : "NEXT"}

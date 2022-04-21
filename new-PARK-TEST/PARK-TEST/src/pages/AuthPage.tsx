@@ -52,25 +52,30 @@ const RegisterForm: React.FC = () => {
     email: Yup.string()
       .required("Required")
       .email("Please enter a valid email"),
-    password: Yup.string()
-      .required("Required"),
-    confirmPassword: Yup.string()
-      .required("Please re-enter your password")
-      .oneOf([Yup.ref("password"), ""], "Passwords must match"),
+    // password: Yup.string()
+    //   .required("Required"),
+    // confirmPassword: Yup.string()
+    //   .required("Please re-enter your password")
+    //   .oneOf([Yup.ref("password"), ""], "Passwords must match"),
+    confirmEmail: Yup.string()
+      .required("Required")
+      .required("Please re-enter your email")
+      .oneOf([Yup.ref("email"), ""], "emails must match"),
     age: Yup.number()
       .required("Required")
       .positive("Please input a positive number")
       .integer(),
     pd: Yup.string().required("Required").oneOf(["yes", "no"]),
-    gender: Yup.string().required("Required").oneOf(["male", "female", "non-binary"]),
+    gender: Yup.string().required("Required").oneOf(["male", "female"]),
     inmotion: Yup.string().required("Required").oneOf(["yes", "no"]),
     color: Yup.string().required("Required").oneOf(["Yellow", "Green", "Orange", "Blue", "NA"]),
   });
 
   const initialValues = {
     email: "",
-    password: "",
-    confirmPassword: "",
+    // password: "",
+    // confirmPassword: "",
+    confirmEmail: "",
     age: "",
     pd: "",
     gender: "",
@@ -83,9 +88,9 @@ const RegisterForm: React.FC = () => {
     try {
       const { user } = await auth.createUserWithEmailAndPassword(
         values.email,
-        values.password
+        values.confirmEmail
       );
-      const { password, confirmPassword, ...data } = values;
+      const { email, confirmEmail, ...data } = values;
       await db.doc(`users/${user?.uid}`).set(data);
       history.push("/login");
     } catch (error) {
@@ -107,7 +112,7 @@ const RegisterForm: React.FC = () => {
         <Form>
           <Header />
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Field
                 fullWidth
                 name="email"
@@ -117,6 +122,16 @@ const RegisterForm: React.FC = () => {
               />
             </Grid>
             <Grid item xs={6}>
+              <Field
+                fullWidth
+                name="confirmEmail"
+                type="email"
+                label="Confirm Email"
+                component={TextField}
+              />
+            </Grid>
+
+            {/* <Grid item xs={6}>
               <Field
                 fullWidth
                 name="password"
@@ -133,7 +148,7 @@ const RegisterForm: React.FC = () => {
                 label="Confirm Password"
                 component={TextField}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={6}>
               <Field
                 fullWidth
@@ -145,7 +160,7 @@ const RegisterForm: React.FC = () => {
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth error={!!errors.gender} >
-                <FormLabel>Gender</FormLabel>
+                <FormLabel>Sex</FormLabel>
                 <Field name="gender" row component={RadioGroup}>
                   <FormControlLabel
                     value="male"
@@ -159,11 +174,11 @@ const RegisterForm: React.FC = () => {
                     label="Female"
                     control={<Radio color="primary" />}
                   />
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     value="non-binary"
                     label="Non-Binary"
                     control={<Radio color="primary" />}
-                  />
+                  /> */}
                 </Field>
                 <FormHelperText>{errors.gender}</FormHelperText>
               </FormControl>
@@ -190,7 +205,7 @@ const RegisterForm: React.FC = () => {
             <Grid item xs={6}>
               <FormControl fullWidth error={!!errors.inmotion}>
                 <FormLabel>
-                  Are you affiliated with InMotion?
+                  Are you affiliated with InMotion (a client, a caregiver of a client, etc.)?
                 </FormLabel>
                 <Field name="inmotion" row component={RadioGroup}>
                   <FormControlLabel
@@ -210,13 +225,18 @@ const RegisterForm: React.FC = () => {
 
             <Grid item xs={12}>
               <FormControl fullWidth error={!!errors.color}>
-                <InputLabel htmlFor="color-select">If you are affiliated with inmotion please select your color, Otherwise please select NA</InputLabel>
+                <InputLabel htmlFor="color-select"> Select your InMotion color rating. If not applicable, select "N/A".</InputLabel>
+                {/* 
+                <FormLabel>
+                  Have you been diagnosed with Parkinson's disease?
+                </FormLabel> */}
+
                 <Field id="color-select" name="color" multiple={false} component={Select}>
                   <MenuItem value="Yellow">Yellow</MenuItem>
                   <MenuItem value="Green">Green</MenuItem>
                   <MenuItem value="Orange">Orange</MenuItem>
                   <MenuItem value="Blue">Blue</MenuItem>
-                  <MenuItem value="NA">NA</MenuItem>
+                  <MenuItem value="NA">N/A</MenuItem>
 
                 </Field>
                 <FormHelperText>{errors.color}</FormHelperText>
@@ -255,12 +275,12 @@ const LoginForm: React.FC = () => {
       .required("Please enter your email")
       .trim()
       .lowercase(),
-    password: Yup.string().required("Please enter your password"),
+    // password: Yup.string().required("Please enter your password"),
   });
 
   const handleSubmit = async (values) => {
     try {
-      await auth.signInWithEmailAndPassword(values.email, values.password);
+      await auth.signInWithEmailAndPassword(values.email, values.email);
       history.push("/session");
     } catch (error) {
       let errorMessage = "Unexpected Error, refresh the page and try again";
@@ -273,7 +293,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
+      initialValues={{ email: "", confirmEmail: "" }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
@@ -288,10 +308,10 @@ const LoginForm: React.FC = () => {
             component={TextField}
           />
           <Field
-            name="password"
-            type="password"
+            name="confirmEmail"
+            type="Email"
             color="secondary"
-            label="Password"
+            label="Confirm Email"
             fullWidth
             component={TextField}
           />

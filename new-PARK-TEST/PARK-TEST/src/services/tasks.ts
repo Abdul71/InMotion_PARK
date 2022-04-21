@@ -87,7 +87,7 @@ export const taskToContent = new Map<Task, TaskContent>([
     {
       label: "SMILE",
       url: "https://youtu.be/teCMNwmPSuA",
-      title: "Make the biggest smile you can followed by a neutral face. Slowly, Mimic this facial expression three times.",
+      title: "Make the biggest smile you can followed by a neutral face. Slowly mimic this facial expression three times.",
       instruction: "",
     },
   ],
@@ -96,7 +96,7 @@ export const taskToContent = new Map<Task, TaskContent>([
     {
       label: "DISGUST",
       url: "https://youtu.be/ujsKzLVub2w",
-      title: "Make the most disgusted face you can followed by a neutral face. Slowly, Mimic this facial expression three times.",
+      title: "Make the most disgusted face you can followed by a neutral face. Slowly mimic this facial expression three times.",
       instruction: "",
     },
   ],
@@ -105,7 +105,7 @@ export const taskToContent = new Map<Task, TaskContent>([
     {
       label: "SURPRISE",
       url: "https://youtu.be/kKskcldRAaU",
-      title: "Raise your eyebrows up as high as you can and down as low as you can three times. Slowly, Mimic this facial expression three times.",
+      title: "Raise your eyebrows up as high as you can and down as low as you can three times. Slowly mimic this facial expression three times.",
       instruction: ""
     },
   ],
