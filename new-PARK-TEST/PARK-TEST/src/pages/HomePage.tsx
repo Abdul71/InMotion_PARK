@@ -42,7 +42,7 @@ const useStyle = makeStyles((theme) => ({
   },
 
   logo_chet: {
-    height: '150',
+    height: '50px',
     width: '300px',
   },
   quarter_panel: {
@@ -209,7 +209,7 @@ const HomePage: React.FC = () => {
 
       <Box m={3} />
 
-      <Grid
+      {/* <Grid
         item
         container
         className={classes.footer}
@@ -250,7 +250,7 @@ const HomePage: React.FC = () => {
           </Typography>
 
         </Grid>
-      </Grid >
+      </Grid > */}
 
 
 

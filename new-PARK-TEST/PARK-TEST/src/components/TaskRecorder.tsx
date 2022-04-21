@@ -36,6 +36,19 @@ const useStyle = makeStyles((theme) => ({
     margin: "1rem",
     zIndex: 10,
   },
+
+  timer: {
+    position: "absolute",
+    top: 0,
+    left: 820,
+    margin: "1rem",
+    zIndex: 10,
+    width: "7%",
+    height: "10%",
+    fontSize: '20px',
+
+  },
+
   bolded_text: {
     fontWeight: 'bold',
     fontStyle: 'italic',
@@ -54,6 +67,9 @@ const TaskRecorder: React.FC<TaskRecorderProps> = (props) => {
 
   const [count, setCount] = useState(-1);
   const tick = () => setCount(count - 1);
+
+  const [timer, setTimer] = useState(-1);
+  const tick_timer = () => setTimer(timer + 1);
 
   const renderPlaceholder = () => {
     return (
@@ -119,6 +135,7 @@ const TaskRecorder: React.FC<TaskRecorderProps> = (props) => {
     }
 
     if (count == 0) {
+      setTimer(0);
       return;
     }
 
@@ -128,6 +145,16 @@ const TaskRecorder: React.FC<TaskRecorderProps> = (props) => {
     return () => clearInterval(id);
   }, [count]);
 
+  useEffect(() => {
+
+    // countdown
+    const id = setInterval(tick_timer, 1000);
+    return () => clearInterval(id);
+  }, [timer]);
+
+
+
+
   const renderStream = (stream: MediaStream) => {
     return (
       <>
@@ -135,6 +162,14 @@ const TaskRecorder: React.FC<TaskRecorderProps> = (props) => {
           className={classes.liveIcon}
           icon={<FiberManualRecord />}
           label="REC"
+          color="secondary"
+        />
+
+        <Chip
+          className={classes.timer}
+
+
+          label={timer}
           color="secondary"
         />
 
