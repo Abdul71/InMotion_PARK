@@ -63,6 +63,8 @@ const RegisterForm: React.FC = () => {
       .integer(),
     pd: Yup.string().required("Required").oneOf(["yes", "no"]),
     gender: Yup.string().required("Required").oneOf(["male", "female", "non-binary"]),
+    inmotion: Yup.string().required("Required").oneOf(["yes", "no"]),
+    color: Yup.string().required("Required").oneOf(["Yellow", "Green", "Orange", "Blue", "NA"]),
   });
 
   const initialValues = {
@@ -72,6 +74,9 @@ const RegisterForm: React.FC = () => {
     age: "",
     pd: "",
     gender: "",
+    inmotion: "",
+    color: "",
+
   };
 
   const handleSubmit = async (values) => {
@@ -163,7 +168,7 @@ const RegisterForm: React.FC = () => {
                 <FormHelperText>{errors.gender}</FormHelperText>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <FormControl fullWidth error={!!errors.pd}>
                 <FormLabel>
                   Have you been diagnosed with Parkinson's disease?
@@ -182,6 +187,42 @@ const RegisterForm: React.FC = () => {
                 <FormHelperText>{errors.pd}</FormHelperText>
               </FormControl>
             </Grid>
+            <Grid item xs={6}>
+              <FormControl fullWidth error={!!errors.inmotion}>
+                <FormLabel>
+                  Are you affiliated with InMotion?
+                </FormLabel>
+                <Field name="inmotion" row component={RadioGroup}>
+                  <FormControlLabel
+                    value="yes"
+                    label="Yes"
+                    control={<Radio color="primary" />}
+                  />
+                  <FormControlLabel
+                    value="no"
+                    label="No"
+                    control={<Radio color="primary" />} />
+                </Field>
+                <FormHelperText>{errors.inmotion}</FormHelperText>
+              </FormControl>
+            </Grid>
+
+
+            <Grid item xs={12}>
+              <FormControl fullWidth error={!!errors.color}>
+                <InputLabel htmlFor="color-select">If you are affiliated with inmotion please select your color, Otherwise please select NA</InputLabel>
+                <Field id="color-select" name="color" multiple={false} component={Select}>
+                  <MenuItem value="Yellow">Yellow</MenuItem>
+                  <MenuItem value="Green">Green</MenuItem>
+                  <MenuItem value="Orange">Orange</MenuItem>
+                  <MenuItem value="Blue">Blue</MenuItem>
+                  <MenuItem value="NA">NA</MenuItem>
+
+                </Field>
+                <FormHelperText>{errors.color}</FormHelperText>
+              </FormControl>
+            </Grid>
+
             <Grid item xs={12} direction="row" alignItems="stretch">
               <FormDivider />
               <Box display="flex" justifyContent="center" >
